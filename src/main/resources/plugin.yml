@@ -5,6 +5,7 @@ api-version: '26.2'
 description: Souhaite la bienvenue aux nouveaux joueurs et récompense ceux qui le font.
 authors: [Ivalona]
 depend: [Vault]
+softdepend: [Nexo]
 
 commands:
   bvn:

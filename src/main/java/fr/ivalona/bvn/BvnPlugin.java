@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import net.kyori.adventure.text.minimessage.tag.standard.StandardTags;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
@@ -18,7 +19,13 @@ import java.util.UUID;
 
 public final class BvnPlugin extends JavaPlugin {
 
-    private static final MiniMessage MM = MiniMessage.miniMessage();
+    /** MiniMessage standard + tag {@code <glyph:id>} de Nexo. */
+    private final MiniMessage mm = MiniMessage.builder()
+            .tags(TagResolver.builder()
+                    .resolver(StandardTags.defaults())
+                    .resolver(new NexoGlyphs(this).resolver())
+                    .build())
+            .build();
 
     /** Accueils en cours, par UUID du nouveau joueur. Uniquement accédé depuis le thread principal. */
     private final Map<UUID, WelcomeSession> sessions = new HashMap<>();
@@ -64,13 +71,18 @@ public final class BvnPlugin extends JavaPlugin {
         return economy;
     }
 
-    /** Construit un message MiniMessage depuis la config (supporte %player%, %seconds%, %reward%). */
+    /**
+     * Construit un message depuis la config. Supporte :
+     * les couleurs classiques (&amp;a, &amp;l, &amp;#rrggbb...), MiniMessage, les glyphs Nexo (&lt;glyph:id&gt;)
+     * et les variables %player%, %seconds%, %reward%.
+     */
     public Component msg(String path, TagResolver... resolvers) {
         String raw = getConfig().getString("messages." + path, "<red>Message manquant : " + path);
-        raw = raw.replace("%player%", "<player>")
+        raw = LegacyColors.toMiniMessage(raw)
+                .replace("%player%", "<player>")
                 .replace("%seconds%", "<seconds>")
                 .replace("%reward%", "<reward>");
-        return MM.deserialize(raw, resolvers);
+        return mm.deserialize(raw, resolvers);
     }
 
     /** Ouvre la fenêtre d'accueil pour un nouveau joueur et prévient tous les autres. */

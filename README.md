@@ -16,10 +16,11 @@ Prérequis : JDK 25 et Maven 3.9+.
 Le jar est généré dans `target/IvalonaBVN-1.0.0.jar` -> à mettre dans `plugins/`.
 
 ## Prérequis serveur
-Paper 26.2, Java 25, Vault et un plugin d'économie (ex. EssentialsX).
+Paper 26.2, Java 25, Vault et un plugin d'économie (ex. EssentialsX). Nexo est optionnel (glyphs).
 
 ## Configuration (`plugins/IvalonaBVN/config.yml`)
-Durée, montant, messages (MiniMessage). `/bvn reload` recharge la config (permission `bvn.admin`).
+Durée, montant, messages. Les messages acceptent les couleurs Minecraft (`&b`, `&c`, `&l`, `&#ff8800`...),
+le MiniMessage et les glyphs Nexo (`<glyph:dollars1>`), mélangeables. Un message qui commence par `&` doit être entre guillemets. `/bvn reload` recharge la config (permission `bvn.admin`).
 
 ## Permissions
 - `bvn.use` (par défaut : tout le monde)

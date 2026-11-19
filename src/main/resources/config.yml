@@ -1,7 +1,11 @@
 # ==========================================================
 #  IvalonaBVN - configuration
-#  Les messages utilisent le format MiniMessage :
-#  https://docs.advntr.dev/minimessage/format.html
+#  Les messages acceptent :
+#   - les couleurs Minecraft : &a &b &c ... &l (gras) &o &n &m &k &r, et &#ff8800 (hex)
+#   - le format MiniMessage : https://docs.advntr.dev/minimessage/format.html
+#   - les glyphs Nexo : <glyph:dollars1> (nécessite Nexo)
+#   Les deux syntaxes peuvent être mélangées dans un même message.
+#   IMPORTANT : un message commençant par & doit être entre guillemets ('...' ou "...").
 #  Variables : %player% (le nouveau joueur), %seconds%, %reward%
 # ==========================================================
 
