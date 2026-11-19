@@ -1,0 +1,20 @@
+name: IvalonaBVN
+version: '${project.version}'
+main: fr.ivalona.bvn.BvnPlugin
+api-version: '26.2'
+description: Souhaite la bienvenue aux nouveaux joueurs et récompense ceux qui le font.
+authors: [Ivalona]
+depend: [Vault]
+
+commands:
+  bvn:
+    description: Souhaiter la bienvenue au(x) nouveau(x) joueur(s).
+    usage: /<command>
+
+permissions:
+  bvn.use:
+    description: Utiliser /bvn
+    default: true
+  bvn.admin:
+    description: Recharger la configuration (/bvn reload)
+    default: op
