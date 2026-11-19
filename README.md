@@ -25,3 +25,6 @@ le MiniMessage et les glyphs Nexo (`<glyph:dollars1>`), mélangeables. Un messag
 ## Permissions
 - `bvn.use` (par défaut : tout le monde)
 - `bvn.admin` (par défaut : op)
+
+## Grade dans le message de bienvenue
+`%sender%` (pseudo de celui qui fait /bvn), `%prefix%` et `%suffix%` (son grade, lu via Vault : LuckPerms doit être relié à Vault) sont utilisables dans le message `welcome`.

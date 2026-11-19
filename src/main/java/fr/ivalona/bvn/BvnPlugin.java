@@ -5,6 +5,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.minimessage.tag.standard.StandardTags;
+import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
@@ -30,6 +31,7 @@ public final class BvnPlugin extends JavaPlugin {
     /** Accueils en cours, par UUID du nouveau joueur. Uniquement accédé depuis le thread principal. */
     private final Map<UUID, WelcomeSession> sessions = new HashMap<>();
     private Economy economy;
+    private Chat chat;
 
     @Override
     public void onEnable() {
@@ -71,13 +73,49 @@ public final class BvnPlugin extends JavaPlugin {
         return economy;
     }
 
+    /** Récupère le service Vault Chat (grades / préfixes, ex. via LuckPerms), de façon paresseuse. */
+    private Chat chat() {
+        if (chat == null) {
+            RegisteredServiceProvider<Chat> rsp = getServer().getServicesManager().getRegistration(Chat.class);
+            if (rsp != null) {
+                chat = rsp.getProvider();
+            }
+        }
+        return chat;
+    }
+
+    private String prefixOf(Player player) {
+        Chat c = chat();
+        String value = c == null ? null : c.getPlayerPrefix(player);
+        return value == null ? "" : value;
+    }
+
+    private String suffixOf(Player player) {
+        Chat c = chat();
+        String value = c == null ? null : c.getPlayerSuffix(player);
+        return value == null ? "" : value;
+    }
+
     /**
      * Construit un message depuis la config. Supporte :
      * les couleurs classiques (&amp;a, &amp;l, &amp;#rrggbb...), MiniMessage, les glyphs Nexo (&lt;glyph:id&gt;)
      * et les variables %player%, %seconds%, %reward%.
      */
     public Component msg(String path, TagResolver... resolvers) {
+        return msg(path, null, resolvers);
+    }
+
+    /**
+     * Idem, avec en plus les variables du joueur « sender » : %sender% (son pseudo),
+     * %prefix% et %suffix% (son grade, via Vault/LuckPerms).
+     */
+    public Component msg(String path, Player sender, TagResolver... resolvers) {
         String raw = getConfig().getString("messages." + path, "<red>Message manquant : " + path);
+        if (sender != null) {
+            raw = raw.replace("%prefix%", prefixOf(sender))
+                    .replace("%suffix%", suffixOf(sender))
+                    .replace("%sender%", sender.getName());
+        }
         raw = LegacyColors.toMiniMessage(raw)
                 .replace("%player%", "<player>")
                 .replace("%seconds%", "<seconds>")
@@ -161,7 +199,7 @@ public final class BvnPlugin extends JavaPlugin {
             // Un seul /bvn par joueur et par nouvel arrivant
             session.claimed().add(player.getUniqueId());
 
-            Bukkit.broadcast(msg("welcome", Placeholder.unparsed("player", session.name())));
+            Bukkit.broadcast(msg("welcome", player, Placeholder.unparsed("player", session.name())));
 
             if (amount > 0) {
                 player.sendMessage(msg("reward",

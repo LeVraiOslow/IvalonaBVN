@@ -13,22 +13,23 @@
 duration-seconds: 20
 
 # Récompense versée via Vault à chaque joueur qui souhaite la bienvenue (0 = aucune)
-reward: 100.0
+reward: 5000.0
 
 # Si le nouveau joueur se déconnecte, l'accueil est annulé
 cancel-if-newcomer-leaves: true
 
 messages:
   # Envoyé à tous les autres joueurs connectés quand un nouveau joueur arrive
-  announce: '<gold>✦ <yellow>%player%</yellow> <gray>vient de rejoindre Ivalona pour la première fois ! Fais <click:run_command:/bvn><hover:show_text:"<green>Cliquer pour souhaiter la bienvenue"><green><bold>/bvn</bold></hover></click> <gray>dans les <white>%seconds%</white> secondes pour l''accueillir et gagner une récompense.'
+  announce: '&#E87833&lɪᴠᴀʟᴏɴᴀ &7» &r&e%player% &7vient de rejoindre &6ɪᴠᴀʟᴏɴᴀ &7pour la première fois ! Fais &e<click:run_command:/bvn><hover:show_text:"&eᴄʟɪqᴜᴇᴢ ᴘᴏᴜʀ sᴏᴜʜᴀɪᴛᴇᴢ ʟᴀ ʙɪᴇɴᴠᴇɴᴜᴇ">/bvn</hover></click> &7dans les &6%seconds% secondes &7pour l''accueillir et gagner une récompense.'
   # Affiché dans le chat pour tout le monde quand quelqu'un fait /bvn
-  welcome: '<green>Bienvenue <yellow>%player%</yellow> sur Ivalona !'
+  # Variables en plus : %sender% (celui qui fait /bvn), %prefix% et %suffix% (son grade, via Vault/LuckPerms)
+  welcome: '%prefix%%sender% &7» &7Bienvenue &e%player% &7!'
   # Envoyé au joueur qui reçoit sa récompense
-  reward: '<gray>Merci pour ton accueil ! Tu as reçu <gold>%reward%</gold><gray>.'
-  already: '<red>Tu as déjà souhaité la bienvenue à ce joueur.'
-  nobody: '<red>Il n''y a personne à accueillir pour le moment.'
-  self: '<red>Tu ne peux pas te souhaiter la bienvenue à toi-même !'
-  economy-error: '<red>Une erreur est survenue lors du versement de la récompense. Préviens un membre du staff.'
-  players-only: '<red>Cette commande est réservée aux joueurs.'
-  no-permission: '<red>Tu n''as pas la permission de faire cela.'
-  reloaded: '<green>Configuration rechargée.'
+  reward: '&#E87833&lɪᴠᴀʟᴏɴᴀ &7» &r&eMerci pour ton accueil ! Tu as reçu &6%reward%<glyph:dollars1>&e.'
+  already: '&#E87833&lɪᴠᴀʟᴏɴᴀ &7» &r&cTu as déjà souhaité la bienvenue à ce joueur.'
+  nobody: '&#E87833&lɪᴠᴀʟᴏɴᴀ &7» &r<red>Il n''y a personne à accueillir pour le moment.'
+  self: '&#E87833&lɪᴠᴀʟᴏɴᴀ &7» &r<red>Tu ne peux pas te souhaiter la bienvenue à toi-même !'
+  economy-error: '&#E87833&lɪᴠᴀʟᴏɴᴀ &7» &r<red>Une erreur est survenue lors du versement de la récompense. Préviens un membre du staff.'
+  players-only: '&#E87833&lɪᴠᴀʟᴏɴᴀ &7» &r<red>Cette commande est réservée aux joueurs.'
+  no-permission: '&#E87833&lɪᴠᴀʟᴏɴᴀ &7» &r<red>Tu n''as pas la permission de faire cela.'
+  reloaded: '&#E87833&lɪᴠᴀʟᴏɴᴀ &7» &r&eConfiguration rechargée.'
